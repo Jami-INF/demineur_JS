@@ -105,32 +105,13 @@ class Grille{
         console.log("test");
     }
     LeftClickGrille(){//fonction qui gère le clique gauche
+        grille = this;
         for(let i=0;i<this.gridSize;i++){
             for(let j=0;j<this.gridSize;j++){
                 let box = document.getElementById(this.grille[i][j].id);
                 box.addEventListener('click',function(){
 
-                    if (this.getAttribute('etat') == 1){//loser
-                        
-                        this.value=EXPLOSION;
-                        grilleUpdateBox(this);
-                        //this.unmaskGrille();
-                        
-                        setTimeout(() => { 
-                            alert('Perdu !');
-                            clearGrille();
-                            
-                            start();
-                        }, 1000);
-
-
-                    }else{
-                        
-                        this.value = toEmoji(checkBombAround(this));
-                        checkAreaEmptyBoxAround(this);
-                        grilleUpdateBox(this);
-                    }
-                    
+                    grille.clickOnBox(this);
                     
                 });
             }
@@ -138,6 +119,29 @@ class Grille{
         
         
     }
+    clickOnBox(box){//fonction qui gère le clique sur une case
+        if (box.getAttribute('etat') == 1){//loser
+                        
+            box.value=EXPLOSION;
+            grilleUpdateBox(box);
+            //this.unmaskGrille();
+            
+            setTimeout(() => { 
+                alert('Perdu !');
+                clearGrille();
+                
+                start();
+            }, 1000);
+
+
+        }else{
+            
+            box.value = toEmoji(checkBombAround(box));
+            checkAreaEmptyBoxAround(box);
+            grilleUpdateBox(box);
+        }
+    }
+
     RightClickGrille(){//fonction qui gère le clique droit
         
         for(let i=0;i<this.gridSize;i++){

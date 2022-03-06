@@ -1,7 +1,7 @@
 function start() {
     grille = new Grille(20);
     grille.grilleMaker();
-    grille.grilleAddRandomBombsNB(90);
+    grille.grilleAddRandomBombsNB(30);
     console.log(grille.grilleToString());
 
     elements = grille.grilleToHTML();
