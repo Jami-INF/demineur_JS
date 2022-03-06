@@ -3,6 +3,7 @@ class Grille{
     grille = []
     constructor(gridSize){
         this.gridSize = gridSize;
+        
     }
     
     grilleMaker(){//crée un tableau de box vide
@@ -11,7 +12,7 @@ class Grille{
             this.grille[i] = [];
             for(let j=0;j<this.gridSize;j++){
                 id+=1;
-                this.grille[i][j] = new Box(id,0, String.fromCodePoint(CARRE_NOIR),i,j);
+                this.grille[i][j] = new Box(id,0, CARRE_NOIR,i,j);
             }
         }
     }
@@ -24,7 +25,7 @@ class Grille{
             let y = Math.floor(Math.random()*this.gridSize);
             if(this.grille[x][y].etat == 0){
                 this.grille[x][y].etat = '1';
-                this.grille[x][y].value = String.fromCodePoint(BOMBE);
+                this.grille[x][y].value = BOMBE;
                 nbBombsLeft-=1;
             }
         }
@@ -36,12 +37,13 @@ class Grille{
             let y = Math.floor(Math.random()*this.gridSize);
             if(this.grille[x][y].etat == 0){
                 this.grille[x][y].etat = '1';
-                this.grille[x][y].value = String.fromCodePoint(BOMBE);
+                this.grille[x][y].value = BOMBE;
                 nbBombsLeft-=1;
             }
         }
     }
-    combienDeBombes(){
+    combienDeBombes(){//retourne le nombre de bombes restantes
+        
         let nbBombs = 0;
         for(let i=0;i<this.gridSize;i++){
             for(let j=0;j<this.gridSize;j++){
@@ -53,7 +55,7 @@ class Grille{
         return nbBombs;
     }
 
-    grilleToHTML(){
+    grilleToHTML(){//crée le HTML de la grille
         let emplacementgrille = document.querySelector('#container');
         let grilleHtml = document.createElement('grille');
         grilleHtml.setAttribute('id','grille');
@@ -76,7 +78,7 @@ class Grille{
         emplacementgrille.appendChild(grilleHtml);
         
     }
-    grilleToString(){
+    grilleToString(){//retourne la grille sous forme de string pret a logger
         let grilleString = '';
         this.grille.forEach(function(line){
             line.forEach(function(box){
@@ -88,24 +90,44 @@ class Grille{
         return grilleString;
     }
 
-    
+    maskGrille(){//masque la grille
+        this.grille.forEach(function(line){
+            line.forEach(function(box){
+                box.value = CARRE_NOIR;
+                grilleUpdateBox(box);
+            });
+            
+        });
+    }
 
 
-
-    LeftClickGrille(){
+    test(){
+        console.log("test");
+    }
+    LeftClickGrille(){//fonction qui gère le clique gauche
         for(let i=0;i<this.gridSize;i++){
             for(let j=0;j<this.gridSize;j++){
                 let box = document.getElementById(this.grille[i][j].id);
                 box.addEventListener('click',function(){
 
-                    if (this.getAttribute("etat") == 1){
-                        this.value=String.fromCodePoint(EXPLOSION);
-                        clearGrille();
-                        alert('Perdu');
-                        start();
+                    if (this.getAttribute('etat') == 1){//loser
+                        
+                        this.value=EXPLOSION;
+                        grilleUpdateBox(this);
+                        //this.unmaskGrille();
+                        
+                        setTimeout(() => { 
+                            alert('Perdu !');
+                            clearGrille();
+                            
+                            start();
+                        }, 1000);
+
 
                     }else{
-                        this.value = checkBombAround(this);
+                        
+                        this.value = toEmoji(checkBombAround(this));
+                        checkAreaEmptyBoxAround(this);
                         grilleUpdateBox(this);
                     }
                     
@@ -113,19 +135,33 @@ class Grille{
                 });
             }
         }
+        
+        
     }
-    RightClickGrille(){
+    RightClickGrille(){//fonction qui gère le clique droit
+        
         for(let i=0;i<this.gridSize;i++){
             for(let j=0;j<this.gridSize;j++){
                 let box = document.getElementById(this.grille[i][j].id);
                 box.addEventListener('contextmenu',function(){
                     this.etat = 1;
                     //add a flag
-                    this.value = String.fromCodePoint(DRAPEAU);
+                    this.value = DRAPEAU;
                     grilleUpdateBox(this);
                 });
             }
         }
+        
+    }
+
+    unmaskGrille(){//démasque la grille
+        this.grille.forEach(function(line){
+            line.forEach(function(box){
+                box.value = toEmoji(box.etat);
+                grilleUpdateBox(box);
+            });
+            
+        });
     }
 
 

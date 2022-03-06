@@ -1,7 +1,7 @@
 function start() {
-    grille = new Grille(10);
+    grille = new Grille(20);
     grille.grilleMaker();
-    grille.grilleAddRandomBombsNB(7);
+    grille.grilleAddRandomBombsNB(90);
     console.log(grille.grilleToString());
 
     elements = grille.grilleToHTML();
@@ -10,6 +10,7 @@ function start() {
     nombremine.innerHTML = grille.combienDeBombes();
     grille.LeftClickGrille();
     grille.RightClickGrille();
+    grille.maskGrille();
 }
 
 function clearGrille(){
