@@ -1,6 +1,6 @@
 class Grille{
     gridSize;
-    grille = []
+    grille = [];
     constructor(gridSize){
         this.gridSize = gridSize;
         
@@ -12,7 +12,7 @@ class Grille{
             this.grille[i] = [];
             for(let j=0;j<this.gridSize;j++){
                 id+=1;
-                this.grille[i][j] = new Box(id,0, CARRE_NOIR,i,j);
+                this.grille[i][j] = new Box(id,0, CARRE_NOIR, 0, i,j);
             }
         }
     }
@@ -28,6 +28,7 @@ class Grille{
                 this.grille[x][y].value = BOMBE;
                 nbBombsLeft-=1;
             }
+            
         }
     }
     grilleAddRandomBombsNB(nbBombs){//ajoute le nombre de bombes demandés
@@ -65,6 +66,7 @@ class Grille{
                 let boxHTML = document.createElement('button');
                 boxHTML.setAttribute('id',box.id);
                 boxHTML.setAttribute('etat',box.etat);
+                boxHTML.setAttribute('decouvert',box.decouvert);
                 boxHTML.setAttribute('y',box.y);
                 boxHTML.setAttribute('x',box.x);
                 boxHTML.innerText = box.value;
@@ -123,6 +125,7 @@ class Grille{
         if (box.getAttribute('etat') == 1){//loser
                         
             box.value=EXPLOSION;
+            this.decouvert = 1;
             grilleUpdateBox(box);
             //this.unmaskGrille();
             
@@ -137,9 +140,13 @@ class Grille{
         }else{
             
             box.value = toEmoji(checkBombAround(box));
-            checkAreaEmptyBoxAround(box);
+            box.decouvert = 1;
+            let tmp = 0;
+            checkAreaEmptyBoxAround(box, tmp);
+            
             grilleUpdateBox(box);
         }
+        
     }
 
     RightClickGrille(){//fonction qui gère le clique droit
@@ -161,7 +168,7 @@ class Grille{
     unmaskGrille(){//démasque la grille
         this.grille.forEach(function(line){
             line.forEach(function(box){
-                box.value = toEmoji(box.etat);
+                box.value = toEmoji(box.value);
                 grilleUpdateBox(box);
             });
             
