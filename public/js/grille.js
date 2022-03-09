@@ -131,10 +131,10 @@ class Grille{
             this.decouvert = 1;
             grilleUpdateBox(box);
             this.unmaskGrille();
+            clearTemps();
             setTimeout(() => { 
                 alert('Perdu !');
                 clearGrille();
-                
                 start();
             }, 1000);
 
@@ -186,7 +186,7 @@ class Grille{
         let tailleGrille = this.gridSize*this.gridSize;
         let nbBoxesLeft = tailleGrille - nbBombsLeft;
         let nbBoxesDecouvertes = 0;
-        console.log(nbBombsLeft);
+        //console.log(nbBombsLeft);
         for(let i=0;i<this.gridSize;i++){
             for(let j=0;j<this.gridSize;j++){
                 let box = document.getElementById(this.grille[i][j].id);
@@ -200,8 +200,8 @@ class Grille{
         }
         if(nbBoxesDecouvertes == nbBoxesLeft){
             alert('Gagné !');
-            clearGrille();
-            start();
+
+
         }
 
     }
@@ -210,4 +210,12 @@ function clearGrille(){
     let grille = document.querySelector('#grille');
     grille.parentNode. removeChild(grille);
 }
-
+function auguementerTemps() {
+    let timerElement = document.querySelector('#timer');
+    timerElement.innerText++;
+}
+function clearTemps(){
+    let timerElement = document.querySelector('#timer');
+    timerElement.innerText = 0;
+}
+  
