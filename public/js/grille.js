@@ -21,27 +21,34 @@ class Grille{
         let nbBombsLeft = Math.round(taille/3);//arrondis la taille divisé par 3
         console.log(nbBombsLeft);
         while(nbBombsLeft>0){
+            
             let x = Math.floor(Math.random()*this.gridSize);
             let y = Math.floor(Math.random()*this.gridSize);
-            if(this.grille[x][y].etat == 0){
-                this.grille[x][y].etat = '1';
-                this.grille[x][y].value = BOMBE;
-                nbBombsLeft-=1;
-            }
+            //if(firstX != x && firstY != y){
+                if(this.grille[x][y].etat == 0){
+                    this.grille[x][y].etat = '1';
+                    this.grille[x][y].value = BOMBE;
+                    nbBombsLeft-=1;
+                }
+            //}
             
         }
     }
-    grilleAddRandomBombsNB(nbBombs){//ajoute le nombre de bombes demandés
+    
+    grilleAddRandomBombsNB(nbBombs, firstX, firstY){//ajoute le nombre de bombes demandés
         let nbBombsLeft = nbBombs;
         while(nbBombsLeft>0){
             let x = Math.floor(Math.random()*this.gridSize);
             let y = Math.floor(Math.random()*this.gridSize);
-            if(this.grille[x][y].etat == 0){
-                this.grille[x][y].etat = '1';
-                this.grille[x][y].value = BOMBE;
-                nbBombsLeft-=1;
+            if(firstX != x && firstY != y){
+                if(this.grille[x][y].etat == 0){
+                    this.grille[x][y].etat = '1';
+                    this.grille[x][y].value = BOMBE;
+                    nbBombsLeft-=1;
+                }
             }
         }
+        return this.grille;
     }
     combienDeBombes(){//retourne le nombre de bombes restantes
         
@@ -102,10 +109,6 @@ class Grille{
         });
     }
 
-
-    test(){
-        console.log("test");
-    }
     LeftClickGrille(){//fonction qui gère le clique gauche
         grille = this;
         for(let i=0;i<this.gridSize;i++){
@@ -127,8 +130,7 @@ class Grille{
             box.value=EXPLOSION;
             this.decouvert = 1;
             grilleUpdateBox(box);
-            //this.unmaskGrille();
-            
+            this.unmaskGrille();
             setTimeout(() => { 
                 alert('Perdu !');
                 clearGrille();
@@ -141,8 +143,7 @@ class Grille{
             
             box.value = toEmoji(checkBombAround(box));
             box.decouvert = 1;
-            let tmp = 0;
-            checkAreaEmptyBoxAround(box, tmp);
+            checkAreaEmptyBoxAround(box);
             
             grilleUpdateBox(box);
         }
@@ -166,16 +167,26 @@ class Grille{
     }
 
     unmaskGrille(){//démasque la grille
-        this.grille.forEach(function(line){
-            line.forEach(function(box){
-                box.value = toEmoji(box.value);
+        let laGrille = this;
+        for(let i=0;i<this.gridSize;i++){
+            for(let j=0;j<this.gridSize;j++){
+                let box = document.getElementById(this.grille[i][j].id);
+                if(box.getAttribute('etat') == 0){
+                    box.value = toEmoji(checkBombAround(box));
+                    box.decouvert = 1;
+                }else{
+                    box.value = BOMBE;
+                    box.decouvert = 1;
+                }
                 grilleUpdateBox(box);
-            });
+
+            };
             
-        });
+        };
     }
-
-
-
+}
+function clearGrille(){
+    let grille = document.getElementById('grille');
+    grille.parentNode. removeChild(grille);
 }
 
