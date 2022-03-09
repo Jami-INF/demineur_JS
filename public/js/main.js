@@ -15,8 +15,34 @@ function start(taille) {
     grille.RightClickGrille();
     
     grille.maskGrille();
+    document.addEventListener('keydown', function (event) {
+        if (event.code === 'Space' || event.code === 'KeyR') {
+            clearGrille();
+            start(taille);
+        }
+      });
 }
 
+let buttonRecommencer = document.querySelector('#btn_recommencer');
+buttonRecommencer.addEventListener('click', function(){
+    clearGrille();
+    start();
+});
+let buttonFacile = document.querySelector('#btn_facile');
+buttonFacile.addEventListener('click', function(){
+    clearGrille();
+    start(10);
+});
+let buttonMoyen = document.querySelector('#btn_moyen');
+buttonMoyen.addEventListener('click', function(){
+    clearGrille();
+    start(15);
+});
+let buttonDifficile = document.querySelector('#btn_difficile');
+buttonDifficile.addEventListener('click', function(){
+    clearGrille();
+    start(20);
+});
 
 
 start();

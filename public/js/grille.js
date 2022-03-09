@@ -19,7 +19,7 @@ class Grille{
     grilleAddRandomBombs(){//ajoute 1/3 de la taille de la grille en bombes
         let taille = this.grille.length * this.grille.length;
         let nbBombsLeft = Math.round(taille/3);//arrondis la taille divisé par 3
-        console.log(nbBombsLeft);
+        //console.log(nbBombsLeft);
         while(nbBombsLeft>0){
             
             let x = Math.floor(Math.random()*this.gridSize);
@@ -65,7 +65,7 @@ class Grille{
 
     grilleToHTML(){//crée le HTML de la grille
         let emplacementgrille = document.querySelector('#container');
-        let grilleHtml = document.createElement('grille');
+        let grilleHtml = document.createElement('div');
         grilleHtml.setAttribute('id','grille');
         this.grille.forEach(function(line){
             let ligne = document.createElement('ligne');
@@ -83,7 +83,7 @@ class Grille{
             grilleHtml.appendChild(document.createElement("br"));
             grilleHtml.appendChild(ligne);
         });
-        console.log(grilleHtml);
+        //console.log(grilleHtml);
         emplacementgrille.appendChild(grilleHtml);
         
     }
@@ -115,8 +115,8 @@ class Grille{
             for(let j=0;j<this.gridSize;j++){
                 let box = document.getElementById(this.grille[i][j].id);
                 box.addEventListener('click',function(){
-
                     grille.clickOnBox(this);
+                    grille.checkVictoire();
                     
                 });
             }
@@ -167,16 +167,13 @@ class Grille{
     }
 
     unmaskGrille(){//démasque la grille
-        let laGrille = this;
         for(let i=0;i<this.gridSize;i++){
             for(let j=0;j<this.gridSize;j++){
                 let box = document.getElementById(this.grille[i][j].id);
                 if(box.getAttribute('etat') == 0){
                     box.value = toEmoji(checkBombAround(box));
-                    box.decouvert = 1;
                 }else{
                     box.value = BOMBE;
-                    box.decouvert = 1;
                 }
                 grilleUpdateBox(box);
 
@@ -184,9 +181,33 @@ class Grille{
             
         };
     }
+    checkVictoire(){//vérifie si le joueur a gagné
+        let nbBombsLeft = this.combienDeBombes();
+        let tailleGrille = this.gridSize*this.gridSize;
+        let nbBoxesLeft = tailleGrille - nbBombsLeft;
+        let nbBoxesDecouvertes = 0;
+        console.log(nbBombsLeft);
+        for(let i=0;i<this.gridSize;i++){
+            for(let j=0;j<this.gridSize;j++){
+                let box = document.getElementById(this.grille[i][j].id);
+
+            
+                if(box.getAttribute('etat') == 0 && box.getAttribute('decouvert') == 1){
+                    nbBoxesDecouvertes+=1;
+                }
+
+            }
+        }
+        if(nbBoxesDecouvertes == nbBoxesLeft){
+            alert('Gagné !');
+            clearGrille();
+            start();
+        }
+
+    }
 }
 function clearGrille(){
-    let grille = document.getElementById('grille');
+    let grille = document.querySelector('#grille');
     grille.parentNode. removeChild(grille);
 }
 

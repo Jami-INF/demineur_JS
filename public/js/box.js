@@ -102,11 +102,8 @@ function checkAreaEmptyBoxAround(box){//fonction qui decouvre les cases vides au
     let box7 = document.querySelector('[x="'+(parseInt(box.getAttribute('x')))+'"][y="'+(parseInt(box.getAttribute('y'))+1)+'"]');
     let box8 = document.querySelector('[x="'+(parseInt(box.getAttribute('x'))+1)+'"][y="'+(parseInt(box.getAttribute('y'))+1)+'"]');
     boxsAround.push(box1,box2,box3,box4,box5,box6,box7,box8);
-    let i = 0;
     boxsAround.forEach(element => {
 
-        console.log(i);
-        i=i+1;
         if(element != undefined){
             //console.log("etat : "+element.getAttribute('etat'))
             //console.log("decouvert : "+element.getAttribute('decouvert'))
