@@ -222,3 +222,9 @@ function clearTemps(){
     timerElement.innerText = 0;
 }
   
+function clearEventListener(){
+    let grille = document.querySelectorAll('button');
+    grille.forEach(function(button){
+        button.replaceWith(button.cloneNode(true));
+    });
+}

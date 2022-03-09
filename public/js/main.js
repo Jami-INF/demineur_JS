@@ -17,11 +17,13 @@ function start(taille) {
     grille.maskGrille();
     
     console.log(timer);
-    console.log(timer);
-    console.log(timer);
+
+
+    
 
     document.addEventListener('keydown', function (event) {
         if (event.code === 'Space' || event.code === 'KeyR') {
+            clearEventListener();
             clearTemps();
             clearGrille(); 
             start(taille);
@@ -30,29 +32,38 @@ function start(taille) {
     });
     let buttonRecommencer = document.querySelector('#btn_recommencer');
     buttonRecommencer.addEventListener('click', function(){
+
+        clearEventListener();
         clearTemps();
-        console.log(timer);
         clearGrille();
         start(taille);
+        
+
 
     });
     let buttonFacile = document.querySelector('#btn_facile');
     buttonFacile.addEventListener('click', function(){
+        clearEventListener();
         clearTemps();
         clearGrille();
         start(10);
+        
     });
     let buttonMoyen = document.querySelector('#btn_moyen');
     buttonMoyen.addEventListener('click', function(){
+        clearEventListener();
         clearTemps();
         clearGrille();
         start(15);
+        
     });
     let buttonDifficile = document.querySelector('#btn_difficile');
     buttonDifficile.addEventListener('click', function(){
+        clearEventListener();
         clearTemps();
         clearGrille();
         start(20);
+        
     });
 }
 
