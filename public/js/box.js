@@ -107,9 +107,10 @@ function checkAreaEmptyBoxAround(box){//fonction qui decouvre les cases vides au
         if(element != undefined){
             //console.log("etat : "+element.getAttribute('etat'))
             //console.log("decouvert : "+element.getAttribute('decouvert'))
+            let nbBombsAround = checkBombAround(element);
             if(element.getAttribute('etat') == 0 && element.getAttribute('decouvert') == 0){
 
-                element.value = toEmoji(checkBombAround(element));
+                element.value = toEmoji(nbBombsAround);
                 element.decouvert = 1;
                 grilleUpdateBox(element);
                 if(checkBombAround(element) == 0){
