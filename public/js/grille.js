@@ -140,12 +140,13 @@ class Grille{
 
 
         }else{
-            
-            box.value = toEmoji(checkBombAround(box));
-            box.decouvert = 1;
-            checkAreaEmptyBoxAround(box);
-            
-            grilleUpdateBox(box);
+            if(box.getAttribute('decouvert') == 0){
+                box.value = toEmoji(checkBombAround(box));
+                box.decouvert = 1;
+                checkAreaEmptyBoxAround(box);
+                
+                grilleUpdateBox(box);
+            }
         }
         
     }
