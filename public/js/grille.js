@@ -18,7 +18,7 @@ class Grille{
     }
     grilleAddRandomBombs(){//ajoute 1/3 de la taille de la grille en bombes
         let taille = this.grille.length * this.grille.length;
-        let nbBombsLeft = Math.round(taille/3);//arrondis la taille divisé par 3
+        let nbBombsLeft = Math.round(taille/6);//arrondis la taille divisé par 3
         //console.log(nbBombsLeft);
         while(nbBombsLeft>0){
             
