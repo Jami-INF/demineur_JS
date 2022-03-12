@@ -1,3 +1,9 @@
+/*
+var jeutermine
+boucle de jeu tant que jeutermine = 0
+
+*/
+
 function start(taille) {
     if (taille == undefined){
         taille = 10;
@@ -8,8 +14,8 @@ function start(taille) {
     //console.log(grille.grilleToString());
     grille.grilleAddRandomBombs();
     grille.grilleToHTML();
-    nombremine = document.querySelector('#nb_mines_restantes');
-    nombremine.innerHTML = grille.combienDeBombes();
+    grille.nombremine = grille.combienDeBombes();
+    grille.updateNombreBombeAffichage();
     
     grille.LeftClickGrille();
     grille.RightClickGrille();

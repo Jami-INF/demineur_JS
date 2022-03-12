@@ -1,6 +1,7 @@
 class Grille{
     gridSize;
     grille = [];
+    nombremine;
     constructor(gridSize){
         this.gridSize = gridSize;
         
@@ -19,6 +20,7 @@ class Grille{
     grilleAddRandomBombs(){//ajoute 1/3 de la taille de la grille en bombes
         let taille = this.grille.length * this.grille.length;
         let nbBombsLeft = Math.round(taille/8);//arrondis la taille divisé par 3
+        this.nombremine = nbBombsLeft;
         //console.log(nbBombsLeft);
         while(nbBombsLeft>0){
             
@@ -34,9 +36,14 @@ class Grille{
             
         }
     }
+    updateNombreBombeAffichage(){//met à jour le nombre de bombes restantes
+        let nombremine = document.querySelector('#nb_mines_restantes');
+        nombremine.innerHTML = this.nombremine;
+    }
     
     grilleAddRandomBombsNB(nbBombs, firstX, firstY){//ajoute le nombre de bombes demandés
         let nbBombsLeft = nbBombs;
+        this.nombremine = nbBombsLeft;
         while(nbBombsLeft>0){
             let x = Math.floor(Math.random()*this.gridSize);
             let y = Math.floor(Math.random()*this.gridSize);
@@ -74,6 +81,7 @@ class Grille{
                 boxHTML.setAttribute('id',box.id);
                 boxHTML.setAttribute('etat',box.etat);
                 boxHTML.setAttribute('decouvert',box.decouvert);
+                boxHTML.setAttribute('drapeau',box.drapeau);
                 boxHTML.setAttribute('y',box.y);
                 boxHTML.setAttribute('x',box.x);
                 boxHTML.innerText = box.value;
@@ -125,22 +133,23 @@ class Grille{
         
     }
     clickOnBox(box){//fonction qui gère le clique sur une case
-        if (box.getAttribute('etat') == 1){//loser
+        if (box.getAttribute('etat') == 1 && box.getAttribute('drapeau') == 0){//loser
                         
             box.value=EXPLOSION;
             this.decouvert = 1;
             grilleUpdateBox(box);
             this.unmaskGrille();
             clearTemps();
+            clearEventListener();
             setTimeout(() => { 
                 alert('Perdu !');
                 clearGrille();
-                start();
+                start(this.gridSize);
             }, 1000);
 
 
         }else{
-            if(box.getAttribute('decouvert') == 0){
+            if(box.getAttribute('decouvert') == 0 && box.getAttribute('drapeau') == 0){
                 box.value = toEmoji(checkBombAround(box));
                 box.decouvert = 1;
                 if(checkBombAround(box) == 0){
@@ -154,15 +163,29 @@ class Grille{
     }
 
     RightClickGrille(){//fonction qui gère le clique droit
-        
+        grille = this
         for(let i=0;i<this.gridSize;i++){
             for(let j=0;j<this.gridSize;j++){
                 let box = document.getElementById(this.grille[i][j].id);
                 box.addEventListener('contextmenu',function(){
-                    this.etat = 1;
-                    //add a flag
-                    this.value = DRAPEAU;
-                    grilleUpdateBox(this);
+                    if(box.getAttribute('drapeau') == 1){
+                        box.value = CARRE_NOIR;
+                        box.drapeau = 0;
+                        console.log('drapeau enlevé'+box.drapeau);
+                        grilleUpdateBox(box);
+                        grille.nombremine +=1;
+                        grille.updateNombreBombeAffichage();
+                    }else if(box.getAttribute('decouvert') == 0){
+                        box.value = DRAPEAU;
+                        box.drapeau = 1;
+                        console.log('drapeau mis'+box.drapeau);
+
+                        grilleUpdateBox(box);
+
+                        grille.nombremine -=1;
+                        grille.updateNombreBombeAffichage();
+
+                    }
                 });
             }
         }
@@ -179,7 +202,6 @@ class Grille{
                     box.value = BOMBE;
                 }
                 grilleUpdateBox(box);
-
             };
             
         };
@@ -203,6 +225,8 @@ class Grille{
         }
         if(nbBoxesDecouvertes == nbBoxesLeft){
             alert('Gagné !');
+            clearGrille();
+            start(this.gridSize);
 
 
         }

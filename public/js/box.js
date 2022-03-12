@@ -3,6 +3,7 @@ class Box{
     etat;//0 = vide, 1=bombe
     value;
     decouvert;
+    drapeau;
     y;
     x;
     constructor(id,etat,value, decouvert, y,x){
@@ -10,6 +11,7 @@ class Box{
         this.etat = etat;
         this.value = value;
         this.decouvert = decouvert;
+        this.drapeau = 0;
         this.y = y;
         this.x = x;
     }  
@@ -27,7 +29,12 @@ function switchEtat(){//inverse l'état de la box
 function grilleUpdateBox(box){//modifie la valeur de la box
     let boxHTML = document.getElementById(box.id);
     //boxHTML.setAttribute('etat', box.etat);
-    boxHTML.setAttribute('decouvert', box.decouvert);
+    console.log('drapeau'+box.drapeau);
+    console.log(box.decouvert);
+    if (box.decouvert != undefined)
+        boxHTML.setAttribute('decouvert', box.decouvert);
+    if (box.drapeau != undefined)
+        boxHTML.setAttribute('drapeau', box.drapeau);
     boxHTML.innerText = box.value;
 }
 function toEmoji(nb){//retourne la constante de l'emoji correspondant au nombre voulu
