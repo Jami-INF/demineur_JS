@@ -5,6 +5,7 @@ boucle de jeu tant que jeutermine = 0
 */
 
 function start(taille) {
+    let restartKeyboard = false;
     if (taille == undefined){
         taille = 10;
     }
@@ -28,12 +29,15 @@ function start(taille) {
     
 
     document.addEventListener('keydown', function (event) {
-        if (event.code === 'Space' || event.code === 'KeyR') {
-            clearEventListener();
-            clearTemps();
-            clearGrille(); 
-            start(taille);
-
+        if(restartKeyboard == false){
+            if (event.code === 'Space' || event.code === 'KeyR') {
+                clearEventListener();
+                clearTemps();
+                clearGrille(); 
+                start(taille);
+                restartKeyboard = true;
+                
+            }
         }
     });
     let buttonRecommencer = document.querySelector('#btn_recommencer');
