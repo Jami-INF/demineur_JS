@@ -29,8 +29,6 @@ function switchEtat(){//inverse l'état de la box
 function grilleUpdateBox(box){//modifie la valeur de la box
     let boxHTML = document.getElementById(box.id);
     //boxHTML.setAttribute('etat', box.etat);
-    console.log('drapeau'+box.drapeau);
-    console.log(box.decouvert);
     if (box.decouvert != undefined)
         boxHTML.setAttribute('decouvert', box.decouvert);
     if (box.drapeau != undefined)
@@ -84,7 +82,6 @@ function checkBombAround(box){//retourne le nombre de bombes autour de la box
 
     boxsAround.forEach(element => {
         if(element != undefined){
-            //console.log("defini")
             if(element.getAttribute('etat') == 1){
                 nbBombsAround+=1;
             }
@@ -112,8 +109,6 @@ function checkAreaEmptyBoxAround(box){//fonction qui decouvre les cases vides au
     boxsAround.forEach(element => {
 
         if(element != undefined){
-            //console.log("etat : "+element.getAttribute('etat'))
-            //console.log("decouvert : "+element.getAttribute('decouvert'))
             let nbBombsAround = checkBombAround(element);
             if(element.getAttribute('etat') == 0 && element.getAttribute('decouvert') == 0){
 

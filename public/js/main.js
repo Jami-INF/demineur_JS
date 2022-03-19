@@ -23,8 +23,6 @@ function start(taille) {
     
     grille.maskGrille();
     
-    console.log(timer);
-
 
     
 

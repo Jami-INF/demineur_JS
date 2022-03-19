@@ -8,13 +8,28 @@
 	margin-bottom:5px;
 	padding: 10px;
 }
-.button {
-    background-color: #4CAF50; /* Green */
+.buttonMenu {
+    background-color: gray;
     border: none;
-    color: white;
+    color: black;
     padding: 15px 32px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 16px;
-  }
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.menu {
+    background-color: #6D6D6D;
+    width:auto;
+    text-align: center;
+	margin:auto;
+	border:1px solid silver;
+	margin-top:5px;
+	margin-bottom:5px;
+	padding: 10px;
+
+}
+
+body{
+    background-color: #2B2B2B;
+}

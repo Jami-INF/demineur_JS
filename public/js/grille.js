@@ -21,7 +21,6 @@ class Grille{
         let taille = this.grille.length * this.grille.length;
         let nbBombsLeft = Math.round(taille/8);//arrondis la taille divisé par 3
         this.nombremine = nbBombsLeft;
-        //console.log(nbBombsLeft);
         while(nbBombsLeft>0){
             
             let x = Math.floor(Math.random()*this.gridSize);
@@ -72,12 +71,20 @@ class Grille{
 
     grilleToHTML(){//crée le HTML de la grille
         let emplacementgrille = document.querySelector('#container');
-        let grilleHtml = document.createElement('div');
+        let grilleHtml = document.createElement('table');
+        grilleHtml.id = 'grille';
+        grilleHtml.setAttribute('cellpadding', '0');
+        grilleHtml.setAttribute('cellspacing', '0');
+        grilleHtml.style.margin = 'auto';
+        grilleHtml.style.border = '2px solid black';
         grilleHtml.setAttribute('id','grille');
         this.grille.forEach(function(line){
-            let ligne = document.createElement('ligne');
+            //let colonne = document.createElement('tr');
+
+            let ligne = document.createElement('tr');
             line.forEach(function(box){
                 let boxHTML = document.createElement('button');
+                let boxTab = document.createElement('td');
                 boxHTML.setAttribute('id',box.id);
                 boxHTML.setAttribute('etat',box.etat);
                 boxHTML.setAttribute('decouvert',box.decouvert);
@@ -85,14 +92,26 @@ class Grille{
                 boxHTML.setAttribute('y',box.y);
                 boxHTML.setAttribute('x',box.x);
                 boxHTML.innerText = box.value;
-                ligne.appendChild(boxHTML);
+
+                boxHTML.style.textAlign = 'center';
+                boxHTML.style.fontSize = '20px';
+                boxHTML.style.backgroundColor = 'gray';
+                boxHTML.style.color = 'black';
+                boxHTML.style.cursor = 'pointer';
+
+                
+                boxTab.appendChild(boxHTML);
+                
+                ligne.appendChild(boxTab);
+                
 
             });
-            grilleHtml.appendChild(document.createElement("br"));
             grilleHtml.appendChild(ligne);
+            grilleHtml.style.backgroundColor = '#6D6D6D';
         });
-        //console.log(grilleHtml);
         emplacementgrille.appendChild(grilleHtml);
+        
+
         
     }
     grilleToString(){//retourne la grille sous forme de string pret a logger
@@ -171,14 +190,12 @@ class Grille{
                     if(box.getAttribute('drapeau') == 1){
                         box.value = CARRE_NOIR;
                         box.drapeau = 0;
-                        console.log('drapeau enlevé'+box.drapeau);
                         grilleUpdateBox(box);
                         grille.nombremine +=1;
                         grille.updateNombreBombeAffichage();
                     }else if(box.getAttribute('decouvert') == 0){
                         box.value = DRAPEAU;
                         box.drapeau = 1;
-                        console.log('drapeau mis'+box.drapeau);
 
                         grilleUpdateBox(box);
 
@@ -211,7 +228,6 @@ class Grille{
         let tailleGrille = this.gridSize*this.gridSize;
         let nbBoxesLeft = tailleGrille - nbBombsLeft;
         let nbBoxesDecouvertes = 0;
-        //console.log(nbBombsLeft);
         for(let i=0;i<this.gridSize;i++){
             for(let j=0;j<this.gridSize;j++){
                 let box = document.getElementById(this.grille[i][j].id);
