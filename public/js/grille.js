@@ -2,6 +2,7 @@ class Grille{
     gridSize;
     grille = [];
     nombremine;
+    partieCommencee = false;
     constructor(gridSize){
         this.gridSize = gridSize;
         
@@ -142,6 +143,10 @@ class Grille{
             for(let j=0;j<this.gridSize;j++){
                 let box = document.getElementById(this.grille[i][j].id);
                 box.addEventListener('click',function(){
+                    if(grille.partieCommencee == false){
+                        clearTemps();
+                        grille.partieCommencee = true;
+                    }
                     grille.clickOnBox(this);
                     grille.checkVictoire();
                     
@@ -231,8 +236,6 @@ class Grille{
         for(let i=0;i<this.gridSize;i++){
             for(let j=0;j<this.gridSize;j++){
                 let box = document.getElementById(this.grille[i][j].id);
-
-            
                 if(box.getAttribute('etat') == 0 && box.getAttribute('decouvert') == 1){
                     nbBoxesDecouvertes+=1;
                 }
@@ -240,11 +243,10 @@ class Grille{
             }
         }
         if(nbBoxesDecouvertes == nbBoxesLeft){
-            alert('Gagné !');
+            let tempsjeu = document.querySelector('#timer').innerHTML;
+            alert('Gagné ! Vous avez fait un temps de : ' + tempsjeu + ' secondes');
             clearGrille();
             start(this.gridSize);
-
-
         }
 
     }

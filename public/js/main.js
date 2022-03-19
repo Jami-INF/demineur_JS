@@ -1,10 +1,5 @@
-/*
-var jeutermine
-boucle de jeu tant que jeutermine = 0
-
-*/
-
 function start(taille) {
+    clearTemps();
     let restartKeyboard = false;
     if (taille == undefined){
         taille = 10;
@@ -22,10 +17,6 @@ function start(taille) {
     grille.RightClickGrille();
     
     grille.maskGrille();
-    
-
-    
-
     document.addEventListener('keydown', function (event) {
         if(restartKeyboard == false){
             if (event.code === 'Space' || event.code === 'KeyR') {
@@ -74,9 +65,6 @@ function start(taille) {
         
     });
 }
-
-
-
 
 let timer = setInterval(auguementerTemps, 1000);
 
