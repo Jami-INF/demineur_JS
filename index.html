@@ -4,32 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="public/css/style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
-    <div id="container"  oncontextmenu="return false;">
-        <div class="grille"></div>
-        <div class = "menu">Il y a  : 
-            <span id="nb_mines_restantes"></span>
-            mines a decouvrir.
-            <div id="timer">0</div>
-            <button id="btn_recommencer" class="buttonMenu">Recommencer</button>
+    <div class="game">
+        <h2>Il reste <span id="nb_mines_restantes"></span> mines à découvrir.</h2>
+        <div id="timer">0</div>
+        <div class="menu">
             <button id="btn_facile" class="buttonMenu">Facile</button>
             <button id="btn_moyen" class="buttonMenu">Moyen</button>
             <button id="btn_difficile" class="buttonMenu">Difficile</button>
-
         </div>
+        <div id="container" oncontextmenu="return false;">
+            <div class="grille"></div>
+        </div>
+        <button id="btn_recommencer" class="buttonRestart"><i class="fas fa-redo-alt icon"></i> Recommencer</button>
     </div>
-    
+    <footer>
+        <p class="textFooter">Démineur réalisé par Jami</p>    
+    </footer>
+    <script src="public/js/const.js"></script>
+    <script src="public/js/box.js"></script>
+    <script src="public/js/grille.js"></script>
+    <script src="public/js/main.js"></script>
 </body>
-<footer>
-    <p>Démineur réalisé par Jami</p>    
-</footer>
-<script src="public/js/const.js"></script>
-<script src = "public/js/box.js"></script>
-<script src = "public/js/grille.js"></script>
-<script src="public/js/main.js"></script>
-
 
 </html>
