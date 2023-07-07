@@ -86,8 +86,8 @@ class Grille{
             line.forEach(function(box){
                 let boxHTML = document.createElement('button');
                 let boxTab = document.createElement('td');
-                boxHTML.style.width = '35px';
-                boxHTML.style.height = '35px';
+                boxHTML.style.width = '38px';
+                boxHTML.style.height = '38px';
                 boxHTML.setAttribute('id',box.id);
                 boxHTML.setAttribute('etat',box.etat);
                 boxHTML.setAttribute('decouvert',box.decouvert);
