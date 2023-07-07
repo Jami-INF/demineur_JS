@@ -12,4 +12,4 @@ const NEUF = "9️";
 const DRAPEAU = "🚩";
 const EXPLOSION = "💥";
 const BOMBE = "💣";
-const CARRE_NOIR = "⬛";
+const CARRE_NOIR = "";
